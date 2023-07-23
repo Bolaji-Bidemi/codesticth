@@ -51,7 +51,7 @@ const Header = () => {
                 src={logo}
                 alt="logo"
                 width="100"
-                onClick={() => navigate("/home")}
+                onClick={() => navigate("/")}
               />
               <h2
                 className="header-h2"

@@ -43,7 +43,7 @@ const HeaderNav = () => {
       ): <ul className="header-ul">
       <li>
         <div className="logo">
-          <img src={logo} alt="logo" width="100" onClick={()=> navigate("/home")} />
+          <img src={logo} alt="logo" width="100" onClick={()=> navigate("/")} />
           <h2
             className="header-h2"
             style={{ fontFamily: "monospace", fontSize: "20px" }}
