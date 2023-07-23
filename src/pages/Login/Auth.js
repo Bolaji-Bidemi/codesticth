@@ -11,7 +11,10 @@ const Auth = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+
   const [visiblePassword, setVisiblePassword] = useState(false)
+  
+
   const message = useSelector((state)=> state.auth.Message)
   
   // const error = useSelector((state)=>state.auth.error)
@@ -29,7 +32,7 @@ const Auth = () => {
       };
       dispatch(login(userDetails))
         .then(() => {
-          toast.success(message);
+          toast.success("Login Successfully");
           navigate("/home");
         })
         .catch((error) => {

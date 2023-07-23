@@ -13,6 +13,8 @@ const RegisterAuth = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [visiblePassword, setVisiblePassword] = useState(false)
+  const [visibleConfirmPassword, setVisibleConfirmPassword] = useState(false)
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -27,17 +29,21 @@ const RegisterAuth = () => {
     };
     dispatch(signup(userDetails))
         .then(() => {
-          toast.success(message);
+          toast.success("Created Successfully");
           navigate("/");
         })
         .catch((error) => {
-          console.log(error)
+          toast("Failed to register")
         });
     
   };
 
    const handleVisiblePassword = () => {
       setVisiblePassword((visiblePass)=> !visiblePass)
+     }
+
+     const handleVisibleConfirmedPassword = () =>{
+      setVisibleConfirmPassword(visible => !visible)
      }
 
   return (
@@ -63,8 +69,8 @@ const RegisterAuth = () => {
         </div>
             <label className="label" htmlFor="password">Confirm Password</label>
             <div className="view">
-        <input type={visiblePassword ? "text" : "password"} name="confirmPassword" id="confirmPassword" onChange={(e)=> setPassword(e.target.value)} />
-        <div className="eye" onClick={handleVisiblePassword}>{visiblePassword ? <RiEyeOffLine style={{color: "white"}}/> : <RiEyeLine style={{color: "white"}}/>}</div>
+        <input type={visibleConfirmPassword ? "text" : "password"} name="confirmPassword" id="confirmPassword" onChange={(e)=> setConfirmPassword(e.target.value)} />
+        <div className="eye" onClick={handleVisibleConfirmedPassword}>{visiblePassword ? <RiEyeOffLine style={{color: "white"}}/> : <RiEyeLine style={{color: "white"}}/>}</div>
         </div>
             <button className="login-btn" type="submit">
               Register
