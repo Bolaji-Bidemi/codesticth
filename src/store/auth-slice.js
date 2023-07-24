@@ -42,7 +42,7 @@ export const signup = createAsyncThunk(
 
 
 
-    const response = await fetch("http://localhost:3005/users/signup", {
+    const response = await fetch("https://backend-iubc.onrender.com/users/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -61,7 +61,7 @@ export const login = createAsyncThunk(
   "login",
   async (userDetails) => {
     try {
-      const response = await fetch("http://localhost:3005/users/login", {
+      const response = await fetch("https://backend-iubc.onrender.com/users/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
