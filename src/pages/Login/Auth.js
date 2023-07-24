@@ -6,17 +6,21 @@ import {toast} from 'react-toastify'
 import "./Auth.css";
 import Header from "../../components/nav/Header";
 import { RiEyeLine, RiEyeOffLine } from 'react-icons/ri'
-
+import Validate from "../../Validate";
 const Auth = () => {
   const navigate = useNavigate();
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
+  // const [email, setEmail] = useState("")
+  // const [password, setPassword] = useState("")
 
   const [visiblePassword, setVisiblePassword] = useState(false)
   
 
   const message = useSelector((state)=> state.auth.Message)
-  
+  const [values, setValues] = useState({
+    email: "",
+    password: ""
+  })
+  const [errors, setErrors] = useState({})
   // const error = useSelector((state)=>state.auth.error)
      const dispatch = useDispatch();
 
@@ -27,8 +31,7 @@ const Auth = () => {
     const handleSubmit = (e) => {
       e.preventDefault();
       const userDetails = {
-        email,
-        password,
+       values
       };
       dispatch(login(userDetails))
         .then(() => {
@@ -38,7 +41,16 @@ const Auth = () => {
         .catch((error) => {
           toast.error("Failed to login");
         });
+      setErrors(Validate(values))
     };
+
+    const handleChange = (e) => {
+      const { name, value } = e.target;
+      setValues({
+        ...values,
+        [name]: value
+      })  
+    }
 
     
   
@@ -55,12 +67,14 @@ const Auth = () => {
        onSubmit={handleSubmit}
       >
         <label className="label" htmlFor="id">Email</label>
-        <input type="text" name="email" id="id" onChange={(e)=> setEmail(e.target.value)} />
+        <input type="text" name="email" id="id" onChange={handleChange} />
+        {errors.email && <p className="error">{errors.email}</p>}
         <label className="label" htmlFor="password">Password</label>
         <div className="view">
-        <input type={visiblePassword ? "text" : "password"} name="password" id="password" onChange={(e)=> setPassword(e.target.value)} />
+        <input type={visiblePassword ? "text" : "password"} name="password" id="password" onChange={handleChange} />
         <div className="eye" onClick={handleVisiblePassword}>{visiblePassword ? <RiEyeOffLine style={{color: "white"}}/> : <RiEyeLine style={{color: "white"}}/>}</div>
         </div>
+        {errors.password && <p className="error">{errors.password}</p>}
         
         <button className="login-btn" type="submit">
           Login

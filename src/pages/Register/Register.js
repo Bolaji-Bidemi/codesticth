@@ -7,11 +7,10 @@ import HeaderNav from "../../components/nav/HeaderNav";
 import {toast} from 'react-toastify'
 import { useSelector } from "react-redux";
 import { RiEyeLine, RiEyeOffLine } from 'react-icons/ri'
+import Validate from "../../Validate";
 
 const RegisterAuth = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+
   const [visiblePassword, setVisiblePassword] = useState(false)
   const [visibleConfirmPassword, setVisibleConfirmPassword] = useState(false)
 
@@ -19,13 +18,17 @@ const RegisterAuth = () => {
   const dispatch = useDispatch();
 
   const message = useSelector((state)=> state.auth.Message)
+  const [values, setValues] = useState({
+    email: "",
+    password: "",
+    confirmPassword: ""
+  })
+  const [errors, setErrors] = useState({})
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const userDetails = {
-      email,
-      password,
-      confirmPassword,
+     values
     };
     dispatch(signup(userDetails))
         .then(() => {
@@ -35,8 +38,16 @@ const RegisterAuth = () => {
         .catch((error) => {
           toast("Failed to register")
         });
-    
+    setErrors(Validate(values))
   };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setValues({
+      ...values,
+      [name]: value
+    })
+  }
 
    const handleVisiblePassword = () => {
       setVisiblePassword((visiblePass)=> !visiblePass)
@@ -59,19 +70,22 @@ const RegisterAuth = () => {
               type="text"
               name="email"
               id="id"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={values.email}
+              onChange={handleChange}
             />
+            {errors.email && <p className="error">{errors.email}</p>}
             <label className="label" htmlFor="password">Password</label>
             <div className="view">
-        <input type={visiblePassword ? "text" : "password"} name="password" id="password" onChange={(e)=> setPassword(e.target.value)} />
+        <input type={visiblePassword ? "text" : "password"} name="password" id="password" onChange={handleChange} value={values.password} />
         <div className="eye" onClick={handleVisiblePassword}>{visiblePassword ? <RiEyeOffLine style={{color: "white"}}/> : <RiEyeLine style={{color: "white"}}/>}</div>
         </div>
+        {errors.password && <p className="error">{errors.password}</p>}
             <label className="label" htmlFor="password">Confirm Password</label>
             <div className="view">
-        <input type={visibleConfirmPassword ? "text" : "password"} name="confirmPassword" id="confirmPassword" onChange={(e)=> setConfirmPassword(e.target.value)} />
+        <input type={visibleConfirmPassword ? "text" : "password"} name="confirmPassword" id="confirmPassword" onChange={handleChange} value={values.confirmPassword} />
         <div className="eye" onClick={handleVisibleConfirmedPassword}>{visiblePassword ? <RiEyeOffLine style={{color: "white"}}/> : <RiEyeLine style={{color: "white"}}/>}</div>
         </div>
+        {errors.confirmPassword && <p className="error">{errors.confirmPassword}</p>}
             <button className="login-btn" type="submit">
               Register
             </button>
