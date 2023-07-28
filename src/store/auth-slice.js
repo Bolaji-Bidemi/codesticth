@@ -37,11 +37,6 @@ const initialState = {
 export const signup = createAsyncThunk(
   "signup",
   async (userDetails) => {
-
-
-
-
-
     const response = await fetch("https://backend-iubc.onrender.com/users/signup", {
       method: "POST",
       headers: {
@@ -103,7 +98,7 @@ const authSlice = createSlice({
       state.loading = true;
     });
     builder.addCase(signup.fulfilled, (state, { payload }) => {
-      state.loading = false;
+      state.loading = true;
       state.Message = payload.Message;
       localStorage.setItem("Message", JSON.stringify(payload.Message));
     });

@@ -9,8 +9,6 @@ import { RiEyeLine, RiEyeOffLine } from 'react-icons/ri'
 import Validate from "../../Validate";
 const Auth = () => {
   const navigate = useNavigate();
-  // const [email, setEmail] = useState("")
-  // const [password, setPassword] = useState("")
 
   const [visiblePassword, setVisiblePassword] = useState(false)
   
@@ -30,10 +28,7 @@ const Auth = () => {
 
     const handleSubmit = (e) => {
       e.preventDefault();
-      const userDetails = {
-       values
-      };
-      dispatch(login(userDetails))
+      dispatch(login(values))
         .then(() => {
           toast.success("Login Successfully");
           navigate("/home");

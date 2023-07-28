@@ -27,10 +27,7 @@ const RegisterAuth = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const userDetails = {
-     values
-    };
-    dispatch(signup(userDetails))
+    dispatch(signup(values))
         .then(() => {
           toast.success("Created Successfully");
           navigate("/");
